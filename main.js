@@ -30,6 +30,8 @@ canvas.addEventListener('mouseout', function (e) {
     window.cancelAnimationFrame(raf);
 });
 
+// Currently does nothing, for now :) 
+
 function logKey(e) {
     if (e.keyCode === 87) { // w
         rocket.draw()
