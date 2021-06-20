@@ -1,48 +1,56 @@
 import Rocket from './rocket.js'
+import Platform from './platform.js'
 
 document.addEventListener('keydown', logKey);
+//document.addEventListener('keyup', logKey);
 
 var canvas = document.getElementById('tutorial');
 var ctx = canvas.getContext('2d');
 var raf;
 
 
-var rocket = new Rocket(0, canvas.height - 100, canvas);
+var rocket = new Rocket(1, canvas.height - 100, canvas);
+var platform = new Platform(300, canvas.height, canvas);
+platform.draw();
 
-function draw(vy) {
+function draw(vy, vx) {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     rocket.draw();
-    if (rocket.y + rocket.vy > canvas.height || rocket.y + rocket.vy < 0) {
-        rocket.vy = -rocket.vy;
+    platform.draw();
+
+
+    rocket.y += vy;
+
+    rocket.x += vx;
+
+    if(336 - rocket.x > 0){
+        alert("crash")
     }
-    if (rocket.x + rocket.vx > canvas.width || rocket.x + rocket.vx < 0) {
-        rocket.vx = -rocket.vx;
-    }
-    rocket.y += rocket.vy;
-    raf = window.requestAnimationFrame(draw);
+
+    //raf = window.requestAnimationFrame(draw);
 }
 
-canvas.addEventListener('mouseover', function (e) {
-    raf = window.requestAnimationFrame(draw);
-});
-
-canvas.addEventListener('mouseout', function (e) {
-    window.cancelAnimationFrame(raf);
-});
+var stop = true;
 
 // Currently does nothing, for now :) 
 
 function logKey(e) {
+    console.log(e.type)
     if (e.keyCode === 87) { // w
-        rocket.draw()
+        draw(-rocket.vy, 0)
+        window.cancelAnimationFrame(raf);
     } else if (e.keyCode === 65) { // a
-        rocket.rollLeft(10)
+        draw(0, -rocket.vx)
+        window.cancelAnimationFrame(raf);
         console.log(rocket.data)
     } else if (e.keyCode === 83) { // s
-        rocket.minusThrust(10)
+        draw(rocket.vy, 0)
         console.log(rocket.data)
+        window.cancelAnimationFrame(raf);
     } else if (e.keyCode === 68) { // d
-        rocket.rollRight(10)
+        draw(0, rocket.vx)
+        window.cancelAnimationFrame(raf);
+
         console.log(rocket.data)
     }
 }

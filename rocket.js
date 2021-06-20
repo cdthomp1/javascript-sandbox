@@ -1,10 +1,12 @@
 export default class Rocket {
     constructor(x, y, canvas) {
+        console.log(canvas)
+
         this.velocity = 0;
         this.roll = 0;
         this.x = x;
         this.y = y;
-        this.vx = 0
+        this.vx = 5
         this.vy = 5;
         this.radius = 25;
         this.canvas = canvas;
@@ -47,7 +49,7 @@ export default class Rocket {
         img.onload = function () {
             ctx.drawImage(img, x, y, 100, 100);
         };
-        /* var ctx = this.canvas.getContext('2d');
+       /*  var ctx = this.canvas.getContext('2d');
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, true);
         ctx.closePath();
